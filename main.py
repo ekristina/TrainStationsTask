@@ -71,6 +71,7 @@ class TrainService(cmd.Cmd):
 
             if answer == 'y':
                 self.do_add_route(line)
+
         else:
             self.do_add_route(line)
 
@@ -93,7 +94,7 @@ class TrainService(cmd.Cmd):
     def do_show_graph(self, line):
         "Shows Towns and distances inside the graph"
         print("Representation of the graph:")
-        print(self.graph)
+        print(dict(self.graph))
 
     def do_EOF(self, line):
         return True
