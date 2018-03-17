@@ -77,7 +77,6 @@ class TrainService(cmd.Cmd):
 
         print("All the towns have been saved to the 'graph' dict")
 
-
     def do_calculate_distance(self, route):
         """Calculates distances between towns.
         Type desired as such: A-B-C"""
@@ -88,7 +87,7 @@ class TrainService(cmd.Cmd):
             towns = route.split("-")
 
         towns = [TownNode(town) for town in towns]
-        result = RouteGraph(towns, routes=self.graph).count_full_distance()
+        result = RouteGraph(routes=self.graph).count_full_distance(towns)
         print(result)
 
     def do_show_graph(self, line):

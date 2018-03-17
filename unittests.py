@@ -25,38 +25,34 @@ class TestRouteDistance(unittest.TestCase):
 
     def test_distance_abc(self):
         self.assertEqual(
-            RouteGraph(towns=[self.a, self.b, self.c],
-                       routes=self.graph).count_full_distance(),
+            RouteGraph(routes=self.graph).count_full_distance([self.a, self.b, self.c]),
             9
         )
 
     def test_distance_ad(self):
         self.assertEqual(
-            RouteGraph(towns=[self.a, self.d],
-                       routes=self.graph).count_full_distance(),
+            RouteGraph(routes=self.graph).count_full_distance([self.a, self.d]),
             5
         )
 
     def test_distance_adc(self):
         self.assertEqual(
-            RouteGraph(towns=(self.a, self.d, self.c),
-                       routes=self.graph).count_full_distance(),
+            RouteGraph(routes=self.graph).count_full_distance((self.a, self.d, self.c)),
             13
         )
 
     def test_distance_aebcd(self):
         self.assertEqual(
-            RouteGraph(towns=(self.a, self.e, self.b, self.c, self.d),
-                       routes=self.graph).count_full_distance(),
+            RouteGraph(routes=self.graph).count_full_distance((self.a, self.e, self.b, self.c, self.d)),
             22
         )
 
     def test_distance_aed(self):
         self.assertEqual(
-            RouteGraph(towns=(self.a, self.e, self.d),
-                       routes=self.graph).count_full_distance(),
+            RouteGraph(routes=self.graph).count_full_distance((self.a, self.e, self.d)),
             "NO SUCH ROUTE"
         )
+
 
 if __name__ == '__main__':
     unittest.main()
