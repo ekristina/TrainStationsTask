@@ -1,5 +1,6 @@
 __author__ = "ekristina"
 
+
 class TownNode:
     """Nodes represent towns"""
     def __init__(self, name: str):
@@ -7,21 +8,23 @@ class TownNode:
         self.visited = False
 
     def __repr__(self):
+        # to print out a proper representation
         return self.name
 
     def __str__(self):
+        # in case you need to make str(TownNode)
         return self.name
 
     def __hash__(self):
         # the TownNode type has to be hashable
+        # Exists for the equality purposes
+        # when the TownNode is used in dicts as a key
         return hash(self.name)
 
-    def __eq__(self, other):
-        # check for equality of two Nodes
-        # particularly used for the check of one
-        # for containing it as a key of a dict
-        return (self.__class__ == other.__class__ and
-                self.name == other.name)
+    # def __eq__(self, other):
+    #     # check for equality
+    #     return (self.__class__ == other.__class__ and
+    #             self.name == other.name)
 
 
 class DistanceEdge:
@@ -36,10 +39,13 @@ class DistanceEdge:
         self.destination = destination
 
     def __repr__(self):
+        # to print out a proper representation
         return f"{self.parent_node.name}{self.destination.name}{self.distance}"
 
     def __str__(self):
+        # in case you need to make str(DistanceEdge)
         return f"{self.parent_node.name}{self.destination.name}{self.distance}"
+
 
 class RouteGraph:
 
@@ -75,7 +81,6 @@ class RouteGraph:
                 return "NO SUCH ROUTE"
 
         return res
-
 
     def count_possible_routes(self, start: TownNode, finish: TownNode, max_stops):
         """

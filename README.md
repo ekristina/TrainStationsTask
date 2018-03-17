@@ -1,12 +1,14 @@
-##### The Problem:  
+### The Problem:  
 The local commuter railroad services a number of towns in Kiwiland.  Because of monetary concerns, all of the tracks are 'one-way.' That is, a route from Kaitaia to Invercargill does not imply the existence of a route from Invercargill to Kaitaia.  In fact, even if both of these routes do happen to exist, they are distinct and are not necessarily the same distance!
 
-Full description of the problem and needed implementation can be found in __task.txt__ file.
+###### Full description of the problem and needed implementation can be found in __task.txt__ file.
 
 
 ### How To Use
 
 The code was implemented using Python 3.6. No additional libraries required to install.
+
+Use `unittests.py` file for unit tests or `main.py` to add data on-the-go.
 
 Run the following in terminal (assuming Python 3 is the default Python version):
 ```bash
