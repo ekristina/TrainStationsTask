@@ -3,6 +3,7 @@ __author__ = "ekristina"
 
 class TownNode:
     """Nodes represent towns"""
+
     def __init__(self, name: str):
         self.name = name
         self.visited = False
@@ -29,11 +30,11 @@ class TownNode:
 
 class DistanceEdge:
     """Edges represent distances between towns"""
+
     def __init__(self,
                  parent_node: TownNode,
                  destination: TownNode,
                  weight: int):
-
         self.parent_node = parent_node
         self.distance = weight
         self.destination = destination
@@ -77,6 +78,8 @@ class RouteGraph:
         # make tuples of two so [A,B,C] becomes [(A,B), (B,C)]
         paths = zip(towns, __shift_list(towns))
         for path in paths:
+            # extract all the edges (distances) connecting
+            # the Node to other nodes
             distances = self.routes[path[0]]
 
             for dist in distances:
@@ -89,18 +92,83 @@ class RouteGraph:
 
         return res
 
-    def count_possible_routes(self, start: TownNode, finish: TownNode, max_stops):
+    def count_possible_routes_max_stops(self, start: TownNode, finish: TownNode,
+                                        max_stops: int, stops: int = 0):
         """
         Counts number of possible trips between given Nodes
+        :param stops: number of trips
         :param start: first town to start route
         :param finish: last town to finish route
-        :param max_stops: int of maximum possible routes
-        :return: int or "NO SUCH ROUTE"
+        :param max_stops: int of maximum possible stops
+        :return: int of trips or "NO SUCH ROUTE"
         """
-        print()
+        if start not in self.routes or finish not in self.routes:
+            # can be returned only immediately and not as a result of recursion
+            return "NO SUCH ROUTE"
 
+        number_of_trips = 0
+        number_of_stops = stops  # depth of traversal
+        if number_of_stops > max_stops:
+            return 0
 
+        # mark start TownNode as visited
+        start.visited = True
 
+        start_edges = self.routes[start]
 
+        for edge in start_edges:
+            # here edge.parent_node == start
+            if edge.destination == finish:
+                # adding to resulting number_of_trips
+                #  if edge.destination is the same as we're looking for
+                number_of_trips += 1
 
+            elif not edge.destination.visited:
+                number_of_stops += 1
+                number_of_trips += self.count_possible_routes_max_stops(
+                    start=edge.destination,
+                    finish=finish,
+                    max_stops=max_stops,
+                    stops=number_of_stops
+                )
 
+        return number_of_trips
+
+    def count_possible_routes_fixed_stops(self, start: TownNode,
+                                          finish: TownNode,
+                                          fixed_stops: int, stops: int = 0):
+        """
+        Counts number of possible trips between given Nodes
+        :param stops: number of trips
+        :param start: first town to start route
+        :param finish: last town to finish route
+        :param fixed_stops: int of fixed possible stops
+        :return: int of trips or "NO SUCH ROUTE"
+        """
+        if start not in self.routes or finish not in self.routes:
+            # can be returned only immediately and not as a result of recursion
+            return "NO SUCH ROUTE"
+
+        number_of_trips = 0
+        number_of_stops = stops + 1  # depth of traversal
+
+        start_edges = self.routes[start]
+
+        for edge in start_edges:
+            # here edge.parent_node == start
+            if edge.destination == finish and number_of_stops == fixed_stops:
+                # adding to resulting number_of_trips
+                #  if edge.destination is the same as we're looking for
+                number_of_trips += 1
+
+            # elif not edge.destination.visited:
+            elif number_of_stops < 4:
+                # number_of_stops += 1
+                number_of_trips += self.count_possible_routes_fixed_stops(
+                    start=edge.destination,
+                    finish=finish,
+                    fixed_stops=fixed_stops,
+                    stops=number_of_stops
+                )
+
+        return number_of_trips
