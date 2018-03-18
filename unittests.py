@@ -3,9 +3,7 @@ import unittest
 from definitions import TownNode, DistanceEdge, RouteGraph
 
 
-class TestRouteDistance(unittest.TestCase):
-
-    """Unittests to test distance calculations between nodes"""
+class BaseTestCase(unittest.TestCase):
 
     def setUp(self):
         """Creates TownNodes and Graphs for each test"""
@@ -28,6 +26,11 @@ class TestRouteDistance(unittest.TestCase):
                      DistanceEdge(self.d, self.e, 6)],
             self.e: [DistanceEdge(self.e, self.b, 3)]
         }
+
+
+class TestRouteDistance(BaseTestCase):
+
+    """Unittests to test distance calculations between nodes"""
 
     def test_distance_abc(self):
         """The distance of the route A-B-C."""
@@ -71,34 +74,12 @@ class TestRouteDistance(unittest.TestCase):
         )
 
 
-class TestNumberOfTripsWithStops(unittest.TestCase):
+class TestNumberOfTripsWithStops(BaseTestCase):
 
     """Unittests for counting number of trips with
         given max or exact number of stops"""
 
-    def setUp(self):
-        """Creates TownNodes and Graphs for each test"""
-        # creating Towns
-        self.a = TownNode("A")
-        self.b = TownNode("B")
-        self.c = TownNode("C")
-        self.d = TownNode("D")
-        self.e = TownNode("E")
-
-        # creating routes
-        self.graph = {
-            self.a: [DistanceEdge(self.a, self.b, 5),
-                     DistanceEdge(self.a, self.d, 5),
-                     DistanceEdge(self.a, self.e, 7)],
-            self.b: [DistanceEdge(self.b, self.c, 4)],
-            self.c: [DistanceEdge(self.c, self.d, 8),
-                     DistanceEdge(self.c, self.e, 2)],
-            self.d: [DistanceEdge(self.d, self.c, 8),
-                     DistanceEdge(self.d, self.e, 6)],
-            self.e: [DistanceEdge(self.e, self.b, 3)]
-        }
-
-    def test_number_of_trips_c_to_c(self):
+    def test_number_of_trips_c_to_c_max(self):
         """The number of trips starting at C and ending at C
         with a maximum of 3 stops.
         In the sample data below, there are two such trips: C-D-C (2
@@ -123,6 +104,31 @@ class TestNumberOfTripsWithStops(unittest.TestCase):
             3
         )
 
+
+class TestShortestRoute(BaseTestCase):
+
+    """Unittests for calculating the shortest
+        route in terms of distance between two points"""
+
+    def test_shortest_route_a_c(self):
+        """The length of the shortest route (in terms of distance to travel)
+        from A to C"""
+        self.assertEqual(
+            RouteGraph(routes=self.graph).shortest_route(
+                self.a, self.c
+            ),
+            9
+        )
+
+    def test_shortest_route_b_b(self):
+        """The length of the shortest route (in terms of distance to travel)
+        from B to B"""
+        self.assertEqual(
+            RouteGraph(routes=self.graph).shortest_route(
+                self.b, self.b
+            ),
+            9
+        )
 
 if __name__ == '__main__':
     unittest.main()
