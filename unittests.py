@@ -65,7 +65,7 @@ class TestRouteDistance(unittest.TestCase):
         )
 
 
-class TestNumberOfTripsWithMaxStops(unittest.TestCase):
+class TestNumberOfTripsWithStops(unittest.TestCase):
 
     """Unittests for counting number of trips with
         given max or exact number of stops"""
