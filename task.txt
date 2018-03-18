@@ -1,18 +1,3 @@
-Some general requirements for your assignment:
-
-• For the solution, we request that you use Python
-
-• Quality is extremely important at BMO, and we need your assignment to show that you understand this.
-
-• Code should be clean and well factored.
-
-• Ready to build/run. Make the setup painless!  Provide complete instructions on how to build/setup/run.
-
-• We may have our own test cases to use against your code, so think carefully about error handling.
-
-• Include a brief explanation of your decisions and thought process in designing and developing your code.  We want to understand why you did what you did just as much as looking at your code.  This is your opportunity to brag!
-
-• You may not use any enhanced functionality of the language or any external libraries to solve this problem; however, you may use external libraries or tools for building or testing purposes. Specifically, you may use JUnit or Ant/Maven to assist your development.
 
 
 INTRODUCTION TO THE PROBLEM
