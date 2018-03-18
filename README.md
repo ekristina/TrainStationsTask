@@ -102,7 +102,7 @@ Type desired route in format: A-B-C
 
 To count the number of trips between two points with a given maximum number of stops use `count_trips_max_stops <start point> <finish point> <max number of stops>`.
 
-To count the number of trips between two points with a given exact number of stops use `count_trips_max_stops <start point> <finish point> <exact number of stops>`
+To count the number of trips between two points with a given exact number of stops use `count_trips_exact_stops <start point> <finish point> <exact number of stops>`
 
 ```
 (Cmd) count_trips_exact_stops A C 4
