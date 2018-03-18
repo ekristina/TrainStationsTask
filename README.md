@@ -111,7 +111,13 @@ Number of trips from A to C given 4 exact number of stops is 3
 
 To find a shortest route in term of distance use `shortest_route <start> <finish>` command.
 
-```bash
+```
 (Cmd) shortest_route A C
 The shortest distance from A to C is 9
+```
+
+To find the number of different routes between two towns with a given maximum distance use `count_routes_with_distance <start> <finish> <maximum distance>`
+```
+(Cmd) count_routes_with_distance C C 30
+Number of trips from C to C given maximum distance of 30 is 7
 ```
