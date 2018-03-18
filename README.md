@@ -108,3 +108,10 @@ To count the number of trips between two points with a given exact number of sto
 (Cmd) count_trips_exact_stops A C 4
 Number of trips from A to C given 4 exact number of stops is 3
 ```
+
+To find a shortest route in term of distance use `shortest_route <start> <finish>` command.
+
+```bash
+(Cmd) shortest_route A C
+The shortest distance from A to C is 9
+```

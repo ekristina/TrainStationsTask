@@ -170,6 +170,37 @@ class TrainService(cmd.Cmd):
               f"given {exact_number_of_stops} exact number "
               f"of stops is {result}")
 
+    def do_shortest_route(self, line):
+        """Calculates the shortest route between two points
+            in terms of distance
+        ** Use shortest_route with parameters:
+                <start> - start_point
+                <finish> - end_point
+        """
+
+        parameters = line.split()
+        if line:
+
+            if len(parameters) != 2:
+                print("Wrong number of arguments")
+
+            else:
+                start, finish = parameters
+                start = TownNode(start)
+                finish = TownNode(finish)
+
+        if not parameters or len(parameters) != 2:
+            print("Enter start point: ")
+            start = TownNode(input())
+
+            print("Enter finish point: ")
+            finish = TownNode(input())
+
+        result = RouteGraph(routes=self.graph).shortest_route(
+            start, finish
+        )
+        print(f"The shortest distance from {start} to {finish} is {result}")
+
     def do_EOF(self, _):
         # to have an option of properly terminate program
         return True
