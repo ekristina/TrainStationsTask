@@ -163,9 +163,8 @@ class RouteGraph:
                 #  if edge.destination is the same as we're looking for
                 number_of_trips += 1
 
-            # elif not edge.destination.visited:
             elif number_of_stops < fixed_stops:
-                # number_of_stops += 1
+
                 number_of_trips += self.count_trips_fixed_stops(
                     start=edge.destination,
                     finish=finish,
@@ -251,7 +250,6 @@ class RouteGraph:
                 #  if edge.destination is the same as we're looking for
                 number_of_trips += 1
 
-            # elif not edge.destination.visited:
             if distance_traveled < max_distance:
                 number_of_trips += self.count_routes_given_distance(
                     start=edge.destination,
