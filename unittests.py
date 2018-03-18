@@ -104,7 +104,7 @@ class TestNumberOfTripsWithStops(unittest.TestCase):
         In the sample data below, there are two such trips: C-D-C (2
             stops). and C-E-B-C (3 stops)."""
         self.assertEqual(
-            RouteGraph(routes=self.graph).count_possible_routes_max_stops(
+            RouteGraph(routes=self.graph).count_trips_max_stops(
                 self.c, self.c, max_stops=3
             ),
             2
@@ -117,7 +117,7 @@ class TestNumberOfTripsWithStops(unittest.TestCase):
             A to C (via B,C,D); A
             to C (via D,C,D); and A to C (via D,E,B)."""
         self.assertEqual(
-            RouteGraph(routes=self.graph).count_possible_routes_fixed_stops(
+            RouteGraph(routes=self.graph).count_trips_fixed_stops(
                 self.a, self.c, fixed_stops=4
             ),
             3

@@ -92,8 +92,9 @@ class RouteGraph:
 
         return res
 
-    def count_possible_routes_max_stops(self, start: TownNode, finish: TownNode,
-                                        max_stops: int, stops: int = 0):
+    def count_trips_max_stops(self, start: TownNode,
+                              finish: TownNode,
+                              max_stops: int, stops: int = 0):
         """
         Counts number of possible trips between given Nodes
         :param stops: number of trips
@@ -125,7 +126,7 @@ class RouteGraph:
 
             elif not edge.destination.visited:
                 number_of_stops += 1
-                number_of_trips += self.count_possible_routes_max_stops(
+                number_of_trips += self.count_trips_max_stops(
                     start=edge.destination,
                     finish=finish,
                     max_stops=max_stops,
@@ -134,9 +135,9 @@ class RouteGraph:
 
         return number_of_trips
 
-    def count_possible_routes_fixed_stops(self, start: TownNode,
-                                          finish: TownNode,
-                                          fixed_stops: int, stops: int = 0):
+    def count_trips_fixed_stops(self, start: TownNode,
+                                finish: TownNode,
+                                fixed_stops: int, stops: int = 0):
         """
         Counts number of possible trips between given Nodes
         :param stops: number of trips
@@ -164,7 +165,7 @@ class RouteGraph:
             # elif not edge.destination.visited:
             elif number_of_stops < 4:
                 # number_of_stops += 1
-                number_of_trips += self.count_possible_routes_fixed_stops(
+                number_of_trips += self.count_trips_fixed_stops(
                     start=edge.destination,
                     finish=finish,
                     fixed_stops=fixed_stops,

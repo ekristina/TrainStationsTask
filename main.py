@@ -125,7 +125,7 @@ class TrainService(cmd.Cmd):
             print("Enter max number of stops: ")
             max_number = int(input())
 
-        result = RouteGraph(routes=self.graph).count_possible_routes_max_stops(
+        result = RouteGraph(routes=self.graph).count_trips_max_stops(
                 start, finish, max_number
             )
 
@@ -162,7 +162,7 @@ class TrainService(cmd.Cmd):
             print("Enter max number of stops: ")
             exact_number_of_stops = int(input())
 
-        result = RouteGraph(routes=self.graph).count_possible_routes_max_stops(
+        result = RouteGraph(routes=self.graph).count_trips_fixed_stops(
                 start, finish, exact_number_of_stops
             )
 
