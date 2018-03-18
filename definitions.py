@@ -1,5 +1,7 @@
 __author__ = "ekristina"
 
+NO_SUCH_ROUTE = "NO SUCH ROUTE"
+
 
 class TownNode:
     """Nodes represent towns"""
@@ -24,8 +26,7 @@ class TownNode:
     def __eq__(self, other):
         # check for equality, also used when TownNode is a key of a dictionary
         # otherwise KeyError will be raised
-        return (self.__class__ == other.__class__ and
-                self.name == other.name)
+        return isinstance(other, TownNode) and self.name == other.name
 
 
 class DistanceEdge:
@@ -66,10 +67,10 @@ class RouteGraph:
         Count full distance between all the given Nodes
 
         :param towns: list or tuple of TownNodes to perform calculations with
-        :return: int distance or str "NO SUCH ROUTE"
+        :return: int distance or str NO_SUCH_ROUTE
         """
         res = 0
-        if len(towns) == 0:
+        if not towns:
             return res
 
         def __shift_list(lst):
@@ -77,18 +78,18 @@ class RouteGraph:
 
         # make tuples of two so [A,B,C] becomes [(A,B), (B,C)]
         paths = zip(towns, __shift_list(towns))
-        for path in paths:
+        for (town_a, town_b) in paths:
             # extract all the edges (distances) connecting
             # the Node to other nodes
-            distances = self.routes[path[0]]
+            distances = self.routes[town_a]
 
             for dist in distances:
-                if dist.destination == path[1]:
+                if dist.destination == town_b:
                     res += dist.distance
                     break
 
             else:
-                return "NO SUCH ROUTE"
+                return NO_SUCH_ROUTE
 
         return res
 
@@ -97,15 +98,16 @@ class RouteGraph:
                               max_stops: int, stops: int = 0):
         """
         Counts number of possible trips between given Nodes
-        :param stops: number of trips, default value
+        
         :param start: first town to start route
         :param finish: last town to finish route
         :param max_stops: int of maximum possible stops
-        :return: int of trips or "NO SUCH ROUTE"
+        :param stops: number of trips, default value
+        :return: int of trips or NO_SUCH_ROUTE
         """
         if start not in self.routes or finish not in self.routes:
             # can be returned only immediately and not as a result of recursion
-            return "NO SUCH ROUTE"
+            return NO_SUCH_ROUTE
 
         number_of_trips = 0
         if stops > max_stops:
@@ -133,7 +135,7 @@ class RouteGraph:
                     max_stops=max_stops,
                     stops=number_of_stops
                 )
-        start.visited = False  # to make it possible to work with graph again
+        start.visited = False  # restore the initial state of node
         return number_of_trips
 
     def count_trips_fixed_stops(self, start: TownNode,
@@ -141,15 +143,16 @@ class RouteGraph:
                                 fixed_stops: int, stops: int = 0):
         """
         Counts number of possible trips between given Nodes
-        :param stops: number of trips
+        
         :param start: first town to start route
         :param finish: last town to finish route
         :param fixed_stops: int of fixed possible stops
-        :return: int of trips or "NO SUCH ROUTE"
+        :param stops: number of trips
+        :return: int of trips or NO_SUCH_ROUTE
         """
         if start not in self.routes or finish not in self.routes:
             # can be returned only immediately and not as a result of recursion
-            return "NO SUCH ROUTE"
+            return NO_SUCH_ROUTE
 
         number_of_trips = 0
         number_of_stops = stops + 1  # depth of traversal
@@ -179,15 +182,16 @@ class RouteGraph:
                        def_distance: int = 0):
         """
         Calculate the shortest route in terms of distance to travel
-        :param def_distance: default value of sum distance
+        
         :param start: start point town
         :param finish: end point town
+        :param def_distance: default value of sum distance
         :return: int of shortest distance
         """
 
         if start not in self.routes or finish not in self.routes:
             # can be returned only immediately and not as a result of recursion
-            return "NO SUCH ROUTE"
+            return NO_SUCH_ROUTE
 
         all_routes = []
 
@@ -213,11 +217,11 @@ class RouteGraph:
                     def_distance=current_distance
                  )
 
-                if new_shortest_route != "NO SUCH ROUTE":
+                if new_shortest_route != NO_SUCH_ROUTE:
                     all_routes.append(new_shortest_route)
 
-        shortest_route = min(all_routes) if all_routes else "NO SUCH ROUTE"
-        start.visited = False  # to make it possible to work with graph again
+        shortest_route = min(all_routes) if all_routes else NO_SUCH_ROUTE
+        start.visited = False  # restore the initial state of node
         return shortest_route
 
     def count_routes_given_distance(self, start: TownNode, finish: TownNode,
@@ -225,17 +229,18 @@ class RouteGraph:
                                     distance_def: int = 0):
         """
         Calculates the number of different routes between two points
-         with a give maximum distance
-        :param distance_def: default traveled distance
-        :param max_distance: int
+         with a given maximum distance
+
         :param start: TownNode
         :param finish: TownNode
+        :param max_distance: int
+        :param distance_def: default traveled distance
         :return: int or NO SUCH ROUTE
         """
 
         if start not in self.routes or finish not in self.routes:
             # can be returned only immediately and not as a result of recursion
-            return "NO SUCH ROUTE"
+            return NO_SUCH_ROUTE
 
         number_of_trips = 0
 
