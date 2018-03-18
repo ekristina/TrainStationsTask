@@ -221,9 +221,9 @@ class RouteGraph:
         start.visited = False  # to make it possible to work with graph again
         return shortest_route
 
-    def dif_routes_given_distance(self, start: TownNode, finish: TownNode,
-                                  max_distance: int,
-                                  distance_def: int = 0):
+    def count_routes_given_distance(self, start: TownNode, finish: TownNode,
+                                    max_distance: int,
+                                    distance_def: int = 0):
         """
         Calculates the number of different routes between two points
          with a give maximum distance
@@ -253,7 +253,7 @@ class RouteGraph:
 
             # elif not edge.destination.visited:
             if distance_traveled < max_distance:
-                number_of_trips += self.dif_routes_given_distance(
+                number_of_trips += self.count_routes_given_distance(
                     start=edge.destination,
                     finish=finish, max_distance=max_distance,
                     distance_def=distance_traveled
