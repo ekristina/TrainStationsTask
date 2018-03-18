@@ -201,6 +201,47 @@ class TrainService(cmd.Cmd):
         )
         print(f"The shortest distance from {start} to {finish} is {result}")
 
+    def do_count_routes_with_distance(self, line):
+        """
+        Counts the number of different routes between
+            two towns with a given maximum distance
+
+        ** Use count_routes_with_distance with paramenters:
+                <start>
+                <finish>
+                <maximum distance>
+        """
+
+        parameters = line.split()
+        if line:
+
+            if len(parameters) != 3:
+                print("Wrong number of arguments")
+
+            else:
+                start, finish, max_distance = parameters
+                start = TownNode(start)
+                finish = TownNode(finish)
+                max_distance = int(max_distance)
+
+        if not parameters or len(parameters) != 3:
+            print("Enter start point: ")
+            start = TownNode(input())
+
+            print("Enter finish point: ")
+            finish = TownNode(input())
+
+            print("Enter max number of stops: ")
+            max_distance = int(input())
+
+        result = RouteGraph(routes=self.graph).count_routes_given_distance(
+            start, finish, max_distance
+        )
+
+        print(f"Number of trips from {start} to {finish} "
+              f"given maximum distance of {max_distance} "
+              f"is {result}")
+
     def do_EOF(self, _):
         # to have an option of properly terminate program
         return True
