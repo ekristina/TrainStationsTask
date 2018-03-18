@@ -90,12 +90,13 @@ class TrainService(cmd.Cmd):
         result = RouteGraph(routes=self.graph).count_full_distance(towns)
         print(result)
 
-    def do_show_graph(self, line):
-        "Shows Towns and distances inside the graph"
+    def do_show_graph(self, _):
+        """Shows Towns and distances inside the graph"""
         print("Representation of the graph:")
         print(dict(self.graph))
 
-    def do_EOF(self, line):
+    def do_EOF(self, _):
+        # to have an option of properly terminate program
         return True
 
 
