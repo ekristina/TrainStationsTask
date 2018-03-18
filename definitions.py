@@ -164,7 +164,7 @@ class RouteGraph:
                 number_of_trips += 1
 
             # elif not edge.destination.visited:
-            elif number_of_stops < 4:
+            elif number_of_stops < fixed_stops:
                 # number_of_stops += 1
                 number_of_trips += self.count_trips_fixed_stops(
                     start=edge.destination,
@@ -220,3 +220,43 @@ class RouteGraph:
         shortest_route = min(all_routes) if all_routes else "NO SUCH ROUTE"
         start.visited = False  # to make it possible to work with graph again
         return shortest_route
+
+    def dif_routes_given_distance(self, start: TownNode, finish: TownNode,
+                                  max_distance: int,
+                                  distance_def: int = 0):
+        """
+        Calculates the number of different routes between two points
+         with a give maximum distance
+        :param distance_def: default traveled distance
+        :param max_distance: int
+        :param start: TownNode
+        :param finish: TownNode
+        :return: int or NO SUCH ROUTE
+        """
+
+        if start not in self.routes or finish not in self.routes:
+            # can be returned only immediately and not as a result of recursion
+            return "NO SUCH ROUTE"
+
+        number_of_trips = 0
+
+        start_edges = self.routes[start]
+
+        for edge in start_edges:
+            # adding to distance sum
+            distance_traveled = edge.distance + distance_def
+            # here edge.parent_node == start
+            if edge.destination == finish and distance_traveled < max_distance:
+                # adding to resulting number_of_trips
+                #  if edge.destination is the same as we're looking for
+                number_of_trips += 1
+
+            # elif not edge.destination.visited:
+            if distance_traveled < max_distance:
+                number_of_trips += self.dif_routes_given_distance(
+                    start=edge.destination,
+                    finish=finish, max_distance=max_distance,
+                    distance_def=distance_traveled
+                )
+
+        return number_of_trips
