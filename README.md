@@ -10,6 +10,20 @@ The code was implemented using Python 3.6. No additional libraries required to i
 
 Use `unittests.py` file for unit tests or `main.py` to add data on-the-go.
 
+All the unit tests have passed:
+```
+..........
+----------------------------------------------------------------------
+Ran 10 tests in 0.001s
+
+OK
+
+```
+
+____
+
+#### Using `main.py`
+
 Run the following in terminal (assuming Python 3 is the default Python version):
 ```bash
 python main.py
