@@ -10,6 +10,11 @@ The code was implemented using Python 3.6. No additional libraries required to i
 
 Use `unittests.py` file for unit tests or `main.py` to add data on-the-go.
 
+`definitions` contains classes of towns as Nodes, routes between towns as Edges and all the route map as Graphs.
+Graph is weighted directed, represented by dict in python: {Node: [Edge1, Edge2]...}
+`main.py` is a console program to operate the Train System.
+`unittests.py` contains 10 unittests from the task in `task.txt`
+
 All the unit tests have passed:
 ```
 ..........
