@@ -88,12 +88,87 @@ class TrainService(cmd.Cmd):
 
         towns = [TownNode(town) for town in towns]
         result = RouteGraph(routes=self.graph).count_full_distance(towns)
-        print(result)
+        print(f"The distance is {result}")
 
     def do_show_graph(self, _):
         """Shows Towns and distances inside the graph"""
         print("Representation of the graph:")
-        print(dict(self.graph))
+        print(dict(self.graph))  # dict because it can be a defaultdict
+
+    def do_count_trips_max_stops(self, line):
+        """Counts the number of trips given maximum number of stops
+        ** Use calculate_num_trips_max_stops with parameters:
+                <start> - start_point
+                <finish> - end_point
+                <maximum number of stops>
+        """
+        parameters = line.split()
+        if line:
+
+            if len(parameters) != 3:
+                print("Wrong number of arguments")
+
+            else:
+                start, finish, max_number = parameters
+                start = TownNode(start)
+                finish = TownNode(finish)
+                max_number = int(max_number)
+
+        if not parameters or len(parameters) != 3:
+
+            print("Enter start point: ")
+            start = TownNode(input())
+
+            print("Enter finish point: ")
+            finish = TownNode(input())
+
+            print("Enter max number of stops: ")
+            max_number = int(input())
+
+        result = RouteGraph(routes=self.graph).count_possible_routes_max_stops(
+                start, finish, max_number
+            )
+
+        print(f"Number of trips from {start} to {finish} "
+              f"given {max_number} max stops is {result}")
+
+    def do_count_trips_exact_stops(self, line):
+        """Counts the number of trips given exact number of stops
+        ** Use calculate_num_trips_max_stops with parameters:
+                <start> - start_point
+                <finish> - end_point
+                <exact number of stops>
+        """
+        parameters = line.split()
+        if line:
+
+            if len(parameters) != 3:
+                print("Wrong number of arguments")
+
+            else:
+                start, finish, exact_number_of_stops = parameters
+                start = TownNode(start)
+                finish = TownNode(finish)
+                exact_number_of_stops = int(exact_number_of_stops)
+
+        if not parameters or len(parameters) != 3:
+
+            print("Enter start point: ")
+            start = TownNode(input())
+
+            print("Enter finish point: ")
+            finish = TownNode(input())
+
+            print("Enter max number of stops: ")
+            exact_number_of_stops = int(input())
+
+        result = RouteGraph(routes=self.graph).count_possible_routes_max_stops(
+                start, finish, exact_number_of_stops
+            )
+
+        print(f"Number of trips from {start} to {finish} "
+              f"given {exact_number_of_stops} exact number "
+              f"of stops is {result}")
 
     def do_EOF(self, _):
         # to have an option of properly terminate program
