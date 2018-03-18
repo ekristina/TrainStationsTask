@@ -3,66 +3,75 @@ import unittest
 from definitions import TownNode, DistanceEdge, RouteGraph
 
 
-# class TestRouteDistance(unittest.TestCase):
-#     def setUp(self):
-#
-#         # creating Towns
-#         self.a = TownNode("A")
-#         self.b = TownNode("B")
-#         self.c = TownNode("C")
-#         self.d = TownNode("D")
-#         self.e = TownNode("E")
-#
-#         # creating routes
-#         self.graph = {
-#             self.a: [DistanceEdge(self.a, self.b, 5),
-#                      DistanceEdge(self.a, self.d, 5),
-#                      DistanceEdge(self.a, self.e, 7)],
-#             self.b: [DistanceEdge(self.b, self.c, 4)],
-#             self.c: [DistanceEdge(self.c, self.d, 8),
-#                      DistanceEdge(self.c, self.e, 2)],
-#             self.d: [DistanceEdge(self.d, self.c, 8),
-#                      DistanceEdge(self.d, self.e, 6)],
-#             self.e: [DistanceEdge(self.e, self.b, 3)]
-#         }
-#
-#     """Unittests to test distance calculations between nodes"""
-#
-#     def test_distance_abc(self):
-#         self.assertEqual(
-#             RouteGraph(routes=self.graph).count_full_distance([self.a, self.b, self.c]),
-#             9
-#         )
-#
-#     def test_distance_ad(self):
-#         self.assertEqual(
-#             RouteGraph(routes=self.graph).count_full_distance([self.a, self.d]),
-#             5
-#         )
-#
-#     def test_distance_adc(self):
-#         self.assertEqual(
-#             RouteGraph(routes=self.graph).count_full_distance((self.a, self.d, self.c)),
-#             13
-#         )
-#
-#     def test_distance_aebcd(self):
-#         self.assertEqual(
-#             RouteGraph(routes=self.graph).count_full_distance((self.a, self.e, self.b, self.c, self.d)),
-#             22
-#         )
-#
-#     def test_distance_aed(self):
-#         self.assertEqual(
-#             RouteGraph(routes=self.graph).count_full_distance((self.a, self.e, self.d)),
-#             "NO SUCH ROUTE"
-#         )
+class TestRouteDistance(unittest.TestCase):
+
+    """Unittests to test distance calculations between nodes"""
+
+    def setUp(self):
+        """Creates TownNodes and Graphs for each test"""
+        # creating Towns
+        self.a = TownNode("A")
+        self.b = TownNode("B")
+        self.c = TownNode("C")
+        self.d = TownNode("D")
+        self.e = TownNode("E")
+
+        # creating routes
+        self.graph = {
+            self.a: [DistanceEdge(self.a, self.b, 5),
+                     DistanceEdge(self.a, self.d, 5),
+                     DistanceEdge(self.a, self.e, 7)],
+            self.b: [DistanceEdge(self.b, self.c, 4)],
+            self.c: [DistanceEdge(self.c, self.d, 8),
+                     DistanceEdge(self.c, self.e, 2)],
+            self.d: [DistanceEdge(self.d, self.c, 8),
+                     DistanceEdge(self.d, self.e, 6)],
+            self.e: [DistanceEdge(self.e, self.b, 3)]
+        }
+
+    def test_distance_abc(self):
+        """The distance of the route A-B-C."""
+        self.assertEqual(
+            RouteGraph(routes=self.graph).count_full_distance([self.a, self.b, self.c]),
+            9
+        )
+
+    def test_distance_ad(self):
+        """The distance of the route A-D."""
+        self.assertEqual(
+            RouteGraph(routes=self.graph).count_full_distance([self.a, self.d]),
+            5
+        )
+
+    def test_distance_adc(self):
+        """The distance of the route A-D-C."""
+        self.assertEqual(
+            RouteGraph(routes=self.graph).count_full_distance((self.a, self.d, self.c)),
+            13
+        )
+
+    def test_distance_aebcd(self):
+        """The distance of the route A-E-B-C-D."""
+        self.assertEqual(
+            RouteGraph(routes=self.graph).count_full_distance((self.a, self.e, self.b, self.c, self.d)),
+            22
+        )
+
+    def test_distance_aed(self):
+        """The distance of the route A-E-D."""
+        self.assertEqual(
+            RouteGraph(routes=self.graph).count_full_distance((self.a, self.e, self.d)),
+            "NO SUCH ROUTE"
+        )
 
 
 class TestNumberOfTripsWithMaxStops(unittest.TestCase):
 
-    def setUp(self):
+    """Unittests for counting number of trips with
+        given max or exact number of stops"""
 
+    def setUp(self):
+        """Creates TownNodes and Graphs for each test"""
         # creating Towns
         self.a = TownNode("A")
         self.b = TownNode("B")
